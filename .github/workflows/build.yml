@@ -21,7 +21,7 @@ jobs:
       with:
         node-version: 16.5.0
         cache: 'npm'
-        
+
     - name: Build the blog
       run: |
         #!/usr/bin/env sh
@@ -31,6 +31,9 @@ jobs:
         npm run build
 
         cd blog/.vitepress/dist
+
+        git config --global user.email "deploybot@github.com"
+        git config --global user.name "DeployBot"
 
         git add --all
         git commit -m "Deploy $(date)"

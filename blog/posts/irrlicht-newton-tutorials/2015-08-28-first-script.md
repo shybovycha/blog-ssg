@@ -436,4 +436,4 @@ If you run our application *now*, you should be able to control sphere with <kbd
 
 <LazyImg src="/images/irrlicht-newton-tutorials/lua_script_with_kbd_handling.webp" />
 
-[Next chapter](irrlicht-newton-tutorials/2015-08-29-prepare-to-add-some-newtonianity)
+[Next chapter](2015-08-29-prepare-to-add-some-newtonianity)

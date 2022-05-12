@@ -601,7 +601,7 @@ Finally, run the interactive shell in the context of the application: `rebar3 sh
 
 Alternatively, you can compile the program to a binary file using `rebar3 compile` and then run the program using `erl` command:
 
-```sh
+```bash
 erl -pa _build/default/lib/http_sample3/ebin/ -pa _build/default/lib/mochiweb/ebin/ -noshell -s http_sample3 main
 ```
 
@@ -629,7 +629,7 @@ Or until the main `erl` process is terminated.
 
 Finally you should be able to communicate with this rather simple server by using `curl`, for example:
 
-```sh
+```bash
 curl http://localhost:4000/my/resource -X PUT -d '{ "name": "message", "value": "my message" }'
 ```
 

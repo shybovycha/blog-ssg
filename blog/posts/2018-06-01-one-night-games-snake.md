@@ -5,7 +5,7 @@ title: 'One-night games: snake'
 
 [source code](https://github.com/shybovycha/moo-snake)
 
-<img src="" alt="" data-src="/images/one-night-games/snake-screenshot.webp" class="medium">
+<LazyImg src="/images/one-night-games/snake-screenshot.webp" />
 
 Under the cut you can find the interesting algorithmic solutions I've mentioned.
 

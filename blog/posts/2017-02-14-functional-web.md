@@ -19,237 +19,164 @@ This is a story how I <s>implemented</s> invented yet another <s>web framework</
 
 ## TL;DR
 
-<style>
-  .row {
-    display: flex;
-    flex-wrap: wrap;
+### React
+
+```jsx
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { counter: 0 };
   }
-
-  .row .col {
-    max-width: 48%;
-    margin: 0 1%;
+  increment() {
+    this.setState({ counter: this.state.counter + 1 });
   }
-</style>
+  decrement() {
+    this.setState({ counter: this.state.counter - 1 });
+  }
+  render() {
+    return (
+      <div>
+        <button onClick={() => this.increment()}>Increment</button>
+        <button onClick={() => this.decrement()}>Decrement</button>
+        <div>Counter: {this.state.counter}</div>
+      </div>
+    );
+  }
+}
+ReactDOM.render(<App />, document.body);
+```
 
-<div class="row">
-  <div class="col">
-    <p><a href="https://facebook.github.io/react/" target="_blank">React</a></p>
+[Run this code](http://codepen.io/shybovycha/pen/dNErOY)
 
-    ```js
-    class App extends React.Component {
-      constructor(props) {
-        super(props);
-        this.state = { counter: 0 };
-      }
+### Redux
 
-      increment() {
-        this.setState({ counter: this.state.counter + 1 });
-      }
+```jsx
+function App(props) {
+  var store = props.store;
+  return (
+    <div>
+      <button onClick={() => store.dispatch({ type: 'INCREMENT' })}>Increment</button>
+      <button onClick={() => store.dispatch({ type: 'DECREMENT' })}>Decrement</button>
+      <div>Counter: {store.getState()}</div>
+    </div>
+  );
+}
+function update(state = 0, action) {
+  switch (action.type) {
+  case 'INCREMENT':
+    return state + 1
+  case 'DECREMENT':
+    return state - 1
+  default:
+    return state
+  }
+}
+var store = Redux.createStore(update);
+function render() {
+  ReactDOM.render(<App store={store} />, document.body);
+}
+render();
+store.subscribe(render);
+```
 
-      decrement() {
-        this.setState({ counter: this.state.counter - 1 });
-      }
+[Run this code](http://codepen.io/shybovycha/pen/RKmYVy)
 
-      render() {
-        return (
-          <div>
-            <button onClick={() => this.increment()}>Increment</button>
-            <button onClick={() => this.decrement()}>Decrement</button>
-            <div>Counter: {this.state.counter}</div>
-          </div>
-        );
-      }
+### Elm
+
+```haskell
+import Html exposing (beginnerProgram, div, button, text)
+import Html.Events exposing (onClick)
+initialState = 0
+view state =
+  div []
+    [ button [ onClick Increment ] [ text "Increment" ]
+    , button [ onClick Decrement ] [ text "Decrement" ]
+    , div [] [ text ("Counter:" ++ (toString state)) ]
+    ]
+type Msg = Increment | Decrement
+update msg state =
+  case msg of
+    Increment ->
+      state + 1
+    Decrement ->
+      state - 1
+main =
+  beginnerProgram { model = initialState, view = view, update = update }
+```
+
+[Compiled code](http://codepen.io/shybovycha/pen/egaLXv)
+
+### Mithril
+
+```js
+var count$ = 0;
+var App = {
+    view: function () {
+      return m('main', [
+        m('button', { class: 'decrement', onclick: function () { count$--; } }, 'Decrement'),
+        m('button', { class: 'increment', onclick: function () { count$++; } }, 'Increment'),
+        m('p', {}, 'Counter: ' + count$),
+      ]);
     }
+};
+m.mount(document.body, App);
+```
 
-    ReactDOM.render(<App />, document.body);
-    ```
+[Run this code](http://codepen.io/shybovycha/pen/WRBgWv)
 
-    <p>
-      <a href="http://codepen.io/shybovycha/pen/dNErOY" target="_blank" class="btn btn-md">Run this code</a>
-    </p>
-  </div>
+### Cycle
 
-  <div class="col">
-    <p><a href="https://facebook.github.io/react/" target="_blank">React</a> + <a href="http://redux.js.org/" target="_blank">Redux</a></p>
+```js
+var xs = xstream.default;
+var { div, p, button, makeDOMDriver } = CycleDOM;
+function App(sources) {
+  var decrement$ = sources.DOM
+    .select('.decrement')
+    .events('click')
+    .mapTo(-1);
+  var increment$ = sources.DOM
+    .select('.increment')
+    .events('click')
+    .mapTo(+1);
+  var action$ = xs.merge(decrement$, increment$);
+  var count$ = action$.fold(function (acc, v) { return acc + v; }, 0);
+  var vtree$ = count$.map(function (count) {
+    return div([
+      button('.decrement', 'Decrement'),
+      button('.increment', 'Increment'),
+      p('Counter: ' + count)
+    ])
+  });
+  return { DOM: vtree$ };
+}
+Cycle.run(App, { DOM: makeDOMDriver('body') });
+```
 
-    ```js
-    function App(props) {
-      var store = props.store;
+[Run this code](http://codepen.io/shybovycha/pen/XpOQvx)
 
-      return (
-        <div>
-          <button onClick={() => store.dispatch({ type: 'INCREMENT' })}>Increment</button>
-          <button onClick={() => store.dispatch({ type: 'DECREMENT' })}>Decrement</button>
-          <div>Counter: {store.getState()}</div>
-        </div>
-      );
-    }
+### libc
 
-    function update(state = 0, action) {
-      switch (action.type) {
-      case 'INCREMENT':
-        return state + 1
-      case 'DECREMENT':
-        return state - 1
-      default:
-        return state
-      }
-    }
+```js
+var initialState = 0;
+function update(state, message) {
+  if (message == 'INCREMENT')
+    return state + 1;
+  if (message == 'DECREMENT')
+    return state - 1;
+  return state;
+};
+function view(state, dispatch) {
+  return ['div', [
+    ['button', { click: () => dispatch('INCREMENT') }, 'Increment'],
+    ['button', { click: () => dispatch('DECREMENT') }, 'Decrement'],
+    ['div', `Count: ${ state }`]
+  ]];
+};
+var app = createApplication(initialState, update, view);
+app.mount(document.body);
+```
 
-    var store = Redux.createStore(update);
-
-    function render() {
-      ReactDOM.render(<App store={store} />, document.body);
-    }
-
-    render();
-
-    store.subscribe(render);
-    ```
-
-    <p>
-      <a href="http://codepen.io/shybovycha/pen/RKmYVy" target="_blank" class="btn btn-md">Code</a>
-    </p>
-  </div>
-
-  <div class="col">
-    <p><a href="http://elm-lang.org" target="_blank">Elm</a></p>
-
-    ```haskell
-    import Html exposing (beginnerProgram, div, button, text)
-    import Html.Events exposing (onClick)
-
-
-    initialState = 0
-
-
-    view state =
-      div []
-        [ button [ onClick Increment ] [ text "Increment" ]
-        , button [ onClick Decrement ] [ text "Decrement" ]
-        , div [] [ text ("Counter:" ++ (toString state)) ]
-        ]
-
-
-    type Msg = Increment | Decrement
-
-
-    update msg state =
-      case msg of
-        Increment ->
-          state + 1
-
-        Decrement ->
-          state - 1
-
-
-    main =
-      beginnerProgram { model = initialState, view = view, update = update }
-    ```
-
-    <p>
-      <a href="http://codepen.io/shybovycha/pen/egaLXv" target="_blank" class="btn btn-md">Compiled code</a>
-    </p>
-  </div>
-
-  <div class="col">
-    <p><a href="http://mithril.js.org" target="_blank">Mithril</a></p>
-
-    ```js
-    var count$ = 0;
-
-    var App = {
-        view: function () {
-          return m('main', [
-            m('button', { class: 'decrement', onclick: function () { count$--; } }, 'Decrement'),
-            m('button', { class: 'increment', onclick: function () { count$++; } }, 'Increment'),
-            m('p', {}, 'Counter: ' + count$),
-          ]);
-        }
-    };
-
-    m.mount(document.body, App);
-    ```
-
-    <p>
-      <a href="http://codepen.io/shybovycha/pen/WRBgWv" target="_blank" class="btn btn-small">Code</a>
-    </p>
-  </div>
-
-  <div class="col">
-    <p><a href="https://cycle.js.org" target="_blank">Cycle</a></p>
-
-    ```js
-    var xs = xstream.default;
-    var { div, p, button, makeDOMDriver } = CycleDOM;
-
-    function App(sources) {
-      var decrement$ = sources.DOM
-        .select('.decrement')
-        .events('click')
-        .mapTo(-1);
-
-      var increment$ = sources.DOM
-        .select('.increment')
-        .events('click')
-        .mapTo(+1);
-
-      var action$ = xs.merge(decrement$, increment$);
-      var count$ = action$.fold(function (acc, v) { return acc + v; }, 0);
-
-      var vtree$ = count$.map(function (count) {
-        return div([
-          button('.decrement', 'Decrement'),
-          button('.increment', 'Increment'),
-          p('Counter: ' + count)
-        ])
-      });
-
-      return { DOM: vtree$ };
-    }
-
-    Cycle.run(App, { DOM: makeDOMDriver('body') });
-    ```
-
-    <p>
-      <a href="http://codepen.io/shybovycha/pen/XpOQvx" target="_blank" class="btn btn-small">Code</a>
-    </p>
-  </div>
-
-  <div class="col">
-    <p><a href="https://github.com/shybovycha/libc.js" target="_blank">libc</a></p>
-
-    ```js
-    var initialState = 0;
-
-    function update(state, message) {
-      if (message == 'INCREMENT')
-        return state + 1;
-
-      if (message == 'DECREMENT')
-        return state - 1;
-
-      return state;
-    };
-
-    function view(state, dispatch) {
-      return ['div', [
-        ['button', { click: () => dispatch('INCREMENT') }, 'Increment'],
-        ['button', { click: () => dispatch('DECREMENT') }, 'Decrement'],
-        ['div', `Count: ${ state }`]
-      ]];
-    };
-
-    var app = createApplication(initialState, update, view);
-
-    app.mount(document.body);
-    ```
-
-    <p>
-      <a href="http://codepen.io/shybovycha/pen/dNEgNa" target="_blank" class="btn btn-md">Code</a>
-    </p>
-  </div>
-</div>
+[Run this code](http://codepen.io/shybovycha/pen/dNEgNa)
 
 ## React + Redux
 
@@ -259,7 +186,7 @@ Let's start-off by writing a simple "counter" application with the well-known Re
 
 The purpose of Facebook's React is to provide an interface to a virtual DOM, which allows users to track updates to the _application views_ and perform DOM operations to update views **with a minimal operation overhead**. In other words, we do not need to remove all the DOM nodes and create new ones from scratch when we can update a single property in a single DOM node. It might look like this:
 
-```js
+```jsx
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -286,7 +213,7 @@ class App extends React.Component {
 ReactDOM.render(<App />, document.body);
 ```
 
-<a href="http://codepen.io/shybovycha/pen/dNErOY" target="_blank" class="btn btn-md">Run this code</a>
+[Run this code](http://codepen.io/shybovycha/pen/dNErOY)
 
 ### Redux
 
@@ -298,7 +225,7 @@ Redux is an ancestor of Facebook's Flux architecture and library. Flux' main goa
 
 Than comes Redux and says _"hey! we probably can do that with just a single store!"_. And whilst Flux did not forbid state updates to modify the state objects themselves, Redux states clearly: _"you may not change state directly - rather you just calculate a new value for it and I take care of everything else"_.
 
-```js
+```jsx
 function App(props) {
   var store = props.store;
 
@@ -333,7 +260,7 @@ render();
 store.subscribe(render);
 ```
 
-<a href="http://codepen.io/shybovycha/pen/RKmYVy" target="_blank" class="btn btn-md">Run this code</a>
+[Run this code](http://codepen.io/shybovycha/pen/RKmYVy)
 
 ## Elm
 
@@ -343,7 +270,7 @@ Elm is ML-like _(Haskell-like)_ language, which compiles to JS, and provides dev
 2. **update function**, which takes current state and an event _(**action** in terms of Redux; **message** in terms of Elm; an object, representing user action or any other event)_ and provides the new value for app state _(model)_
 3. **view function**, which converts current app state into a virtual DOM tree
 
-<img src="/images/functional_web/elm_architecture.webp" alt="Elm workflow">
+<LazyImg src="/images/functional_web/elm_architecture.webp" alt="Elm workflow" />
 
 Elm runtime handles everything else - passing messages to the `update` function, comparing the actual DOM tree with the one, provided by a `view` function and performing all DOM tree manipulations.
 
@@ -383,7 +310,7 @@ main =
   beginnerProgram { model = initialState, view = view, update = update }
 ```
 
-<a href="http://codepen.io/shybovycha/pen/egaLXv" target="_blank" class="btn btn-md">Run compiled version of this code</a>
+[Run compiled version of this code](http://codepen.io/shybovycha/pen/egaLXv)
 
 In this example, we first define initial application state, which is just integer number of zero.
 
@@ -417,7 +344,7 @@ var App = {
 m.mount(document.body, App);
 ```
 
-<a href="http://codepen.io/shybovycha/pen/WRBgWv" target="_blank" class="btn btn-small">Run this code</a>
+[Run this code](http://codepen.io/shybovycha/pen/WRBgWv)
 
 This is much less code than in case with React + Redux, isn't it?
 
@@ -457,7 +384,7 @@ function App(sources) {
 Cycle.run(App, { DOM: makeDOMDriver('body') });
 ```
 
-<a href="http://codepen.io/shybovycha/pen/XpOQvx" target="_blank" class="btn btn-small">Run this code</a>
+[Run this code](http://codepen.io/shybovycha/pen/XpOQvx)
 
 Let me explain this source, since this might not be obvious.
 
@@ -475,7 +402,7 @@ Here's what should be explained regarding those event streams: a **stream** is a
 
 Here's a diagram, showing all the transformations:
 
-<img src="/images/functional_web/CycleJS_example-compressed.webp" alt="Event transformations diagram">
+<LazyImg src="/images/functional_web/CycleJS_example-compressed.webp" alt="Event transformations diagram" />
 
 So once a click event _(on one of two buttons, of course)_ appears, it is transformed to either `-1` or `1`, depending on the button which fired that event; then this number is added to the existing _(which might appear to be empty)_ event stream `action$`; then the sum is calculated over all the numbers in that stream; then the sum is transformed into a virtual DOM tree; and lastly, the virtual DOM tree is returned from a view function and Cycle does its job to update the actual DOM. And since there always will be a different value of sum in our example, the DOM will always be updated.
 
@@ -513,7 +440,7 @@ var app = createApplication(initialState, update, view);
 app.mount(document.body);
 ```
 
-<a href="http://codepen.io/shybovycha/pen/dNEgNa" target="_blank" class="btn btn-md">Run this code</a>
+[Run this code](http://codepen.io/shybovycha/pen/dNEgNa)
 
 All the DOM nodes are created using the array returned, which should match pattern `[tag, {attributes}, (text | [children]))` _(just like Mithril uses `m()` function or Elm uses `div` and other helper functions)_. Originally, `libc` used `c()` helper function to do that _(similar to Mithril's `m()` function)_, and that's why it was called `libC`.
 
@@ -525,7 +452,16 @@ There are however couple highlights regarding `libc`:
 
 * it can create arbitrary tags _(DOM nodes)_ within the `view()` function _(the first element in each array is tag name, which could be pretty much anything)_, so it's quite easy to use it in couple with other libraries _(such as Angular-material, React or Polymer, for instance)_
 * properties, whose value is a function are automatically mapped to event listeners; taking into account that property names could be arbitrary as well, you may add event listeners to your custom events
-* again, property names could be arbitrary, so you can use even angular ones if you want: `['div', { 'ng-repeat': 'item in items' }, '{{item.name}}']`
+* again, property names could be arbitrary, so you can use even angular ones if you want: 
+
+::: v-pre
+
+```js
+['div', { 'ng-repeat': 'item in items' }, '{{item.name}}']
+```
+
+:::
+
 * both `properties` and `children or text` arguments are optional; thus you can create empty DOM elements: `['hr']`
 * to enable communication with your applications from the outside, application instance, returned by the `createApplication()` function, has the `dispatch(message)` method
 

@@ -44,23 +44,7 @@ Here, you can even play around with it now!
   <div id="gantt-chart"></div>
 </div>
 
-<script>
-window.addEventListener('DOMContentLoaded', () => {
-  const chartScreenshot = document.querySelector('#gantt-chart-screenshot');
-  const chartContainer = document.querySelector('.chart-container');
-
-  const bundle = document.createElement('script');
-
-  bundle.onload = () => {
-    chartContainer.style.display = 'block';
-    chartScreenshot.parentElement.removeChild(chartScreenshot);
-  };
-
-  bundle.src = '/js/gantt-chart.bundle.js';
-
-  document.body.appendChild(bundle);
-});
-</script>
+<!-- TBD -->
 
 More about the implementation specifics under the cut.
 

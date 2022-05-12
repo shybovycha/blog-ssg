@@ -18,20 +18,4 @@ Click the button below to start playing.
 
 <button id="start-rogue-bomber" class="btn btn-md btn-primary read-more">Play!</button>
 
-<script>
-window.addEventListener('DOMContentLoaded', () => {
-  const bundle = document.createElement('script');
-
-  bundle.onload = () => {
-    document.querySelector('#start-rogue-bomber').onclick = () => {
-      const canvas = document.createElement('canvas');
-      const parent = document.querySelector('#rogue-bomber-placeholder').appendChild(canvas);
-      window.__startRogueBomber(canvas);
-    };
-  };
-
-  bundle.src = '/js/rogue-bomber.js';
-
-  document.body.appendChild(bundle);
-});
-</script>
+<!-- TBD -->

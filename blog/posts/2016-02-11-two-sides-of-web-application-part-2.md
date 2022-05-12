@@ -9,7 +9,7 @@ date: '2016-02-11 13:47:39 +01:00'
         {% include references/two-sides-of-web-application.html %}
     </div>
     <div class="col-md-6 col-xs-12 text-xs-center text-md-right">
-        <LazyImg src="/images/two-sides-of-web-application/Gyroscopic-Navigational-Footwear-compressed.webp" class="img-responsive" style="max-height: 150px" alt="Funny image" / />
+        <LazyImg src="/images/two-sides-of-web-application/Gyroscopic-Navigational-Footwear-compressed.webp" alt="Funny image" />
     </div>
 </div>
 
@@ -744,5 +744,4 @@ above.
 
 ## Demo
 
-<p data-height="268" data-theme-id="0" data-slug-hash="obQbvX" data-default-tab="result" data-user="shybovycha" class='codepen'>See the Pen <a href='http://codepen.io/shybovycha/pen/obQbvX/'>Simple web analytics. Angular injection. v1</a> by Artem Shoobovych (<a href='http://codepen.io/shybovycha'>@shybovycha</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
-<script async src="/assets.codepen.io/assets/embed/ei.js"></script>
+[Simple web analytics. Angular injection. v1](http://codepen.io/shybovycha/pen/obQbvX/)

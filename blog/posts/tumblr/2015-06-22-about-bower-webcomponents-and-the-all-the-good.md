@@ -8,7 +8,7 @@ tags:
 tumblr_url: http://shybovycha.tumblr.com/post/122161655426/about-bower-webcomponents-and-the-all-the-good
 ---
 
-<img src="/images/Pg-02-shakespeare-getty.webp" class="img-responsive img-sm img-rounded pull-right">
+<LazyImg src="/images/Pg-02-shakespeare-getty.webp" />
 
 ## BEM
 
@@ -214,7 +214,9 @@ So, welcome the WebComponents' example:
 
 This code may not look so good, as it might, but it works like a charm!
 
-<p><a href="http://codepen.io/shybovycha/pen/gpGJOV"><figure data-orig-width="660" data-orig-height="79" class="tmblr-full"><img src="/tumblr_files/tumblr_inline_nqciwfuAqT1qh5oee_540.png" alt="image" data-orig-width="660" data-orig-height="79"/></figure></a></p>
+[Run this code](http://codepen.io/shybovycha/pen/gpGJOV)
+
+<LazyImg src="/tumblr_files/tumblr_inline_nqciwfuAqT1qh5oee_540.png" alt="image" />
 
 This example is a bit ugly - it has both CSS, HTML and JavaScript mixed in a single file, but we’ll deal with it for a short time. Just think of the power you’ve got! You can define your own… well, it’s certainly kinda components! It is a bit uncomfortable to paste onto a page… and they are hardly ready to be used with something like Angular.
 

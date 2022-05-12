@@ -4,15 +4,7 @@ title: "Two sides of web application. Part 1: the tools"
 date: '2015-09-20 20:18:39 +01:00'
 ---
 
-<div class="row" style="justify-content: space-between">
-    <div class="col-md-6 col-xs-12">
-        {% include references/two-sides-of-web-application.html %}
-    </div>
-
-    <div class="col-md-6 col-xs-12 text-xs-center text-md-right">
-        <LazyImg src="/images/two-sides-of-web-application/chocolate_tools.webp" class="img-responsive" style="max-height: 150px" / />
-    </div>
-</div>
+<LazyImg src="/images/two-sides-of-web-application/chocolate_tools.webp" />
 
 ## Prologue
 
@@ -56,9 +48,7 @@ tracking users' location and browser only. And we'll be displaying those analyti
 
 We will be developing our application with two layers (or two sides) - front-end and back-end:
 
-<div class="text-center">
-    <LazyImg src="/images/two-sides-of-web-application/general_architecture.webp" class="img-responsive" / />
-</div>
+<LazyImg src="/images/two-sides-of-web-application/general_architecture.webp" />
 
 The front-end part is the one the user sees and uses - the web page, mobile or desktop application. The back-end part is the one, which does all the magic - prepares data for the front-end side to display, performs data operations as a reaction on user's actions, etc. Thus we could easily replace either the back-end part or the front-end one or even both and replace them with all brand-new implementation. This architecture allows us to do that really easily.
 
@@ -242,9 +232,7 @@ html(lang="en")
 head
     meta(charset="UTF-8")
     title OurStats
-    link(rel="stylesheet" href="/stylesheets/main.css")
-    script(type="text/javascript" src="/javascripts/main.js")
-body
+    link(rel="stylesheet" href="/stylesheets/dy
     h1 Hello, world!
 ```
 
@@ -275,7 +263,7 @@ async function f() {
 f()
 ```
 
-<a href="https://github.com/shybovycha/two-sides-of-web-application/tree/10f770a5ca64fad1cb6e58bc957e5210bc95bda3" class="btn btn-info">Full code of these steps</a>
+[Full code of these steps](https://github.com/shybovycha/two-sides-of-web-application/tree/10f770a5ca64fad1cb6e58bc957e5210bc95bda3)
 
 And to actually check our task, we need to run it with
 
@@ -338,8 +326,8 @@ gulp.task('serve', function () {
 
 This task first defines a watcher for our sources and then starts server, which will react to any changes
 in the `public/` directory. To check how this awesomeness works, start `gulp serve`, open the
-[`localhost:3000/test.html`](localhost:3000/test.html) page and then change, for example,
+`localhost:3000/test.html` page and then change, for example,
 color for the `h1` tag to green. Save the SCSS file and just switch to the browser window, **don't reload
 it manually**.
 
-<a href="https://github.com/shybovycha/two-sides-of-web-application/tree/07f6cda21da377719861f41f89064a414e808268" class="btn btn-info">Full code of these steps</a>
+[Full code of these steps](https://github.com/shybovycha/two-sides-of-web-application/tree/07f6cda21da377719861f41f89064a414e808268)

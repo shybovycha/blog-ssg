@@ -7,21 +7,18 @@ published: True
 
 ---
 
-<LazyImg src="/images/regex-compressed.webp" class="img-responsive img-sm img-rounded pull-right" />
+<LazyImg src="/images/regex-compressed.webp" />
 
-At my work we've lately been having a discussions on email validation. I recalled a post on
-[habrahabr](http://habrahabr.ru/post/55820/), showing
-different options, including **effective** and **psycho** solutions.
+At my work we've lately been having a discussions on email validation. I recalled a post on [habrahabr](http://habrahabr.ru/post/55820/), showing different options, including **effective** and **psycho** solutions.
 
 <!--more-->
 
 From [CPAN](http://search.cpan.org/~pdwarren/Mail-RFC822-Address-0.3/Address.pm):
 
-<blockquote>
+::: details
 Mail::RFC822::Address: regexp-based address validation
-
 This regular expression will only validate addresses that have had any comments stripped and replaced with whitespace (this is done by the module).
-</blockquote>
+:::
 
 ```js
 /(?:(?:\r\n)?[ \t])*(?:(?:(?:[^()<>@,;:\\".\[\] \000-\031]+(?:(?:(?:\r\n)?[ \t]
@@ -110,13 +107,13 @@ r\\]|\\.)*\](?:(?:\r\n)?[ \t])*)(?:\.(?:(?:\r\n)?[ \t])*(?:[^()<>@,;:\\".\[\]
 
 And below is the most effective solution *(also matches virtual Gmail addresses with `+` sign)*.
 
-```javascript
+```js
 /.+@.+\..{2,}/i
 ```
 
 To match development addresses, you may want to make it even shorter:
 
-```javascript
+```js
 /.+@.+/i
 ```
 

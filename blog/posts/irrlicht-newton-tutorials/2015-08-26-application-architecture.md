@@ -13,30 +13,15 @@ prevent suffering in the future.
 
 Well, there are number of application architecture' levels:
 
-<div class="row">
-    <div class="col" style="margin-right: 1em;">
-        <LazyImg src="/images/irrlicht-newton-tutorials/japan_feudal_system.webp" / />
-    </div>
-    <div class="col">
-        <p>
-            The highest level defines which modules will the whole
-            application consist of and what functionality will each of those modules have.
-        </p>
+<LazyImg src="/images/irrlicht-newton-tutorials/japan_feudal_system.webp" />
 
-        <p>
-            The next level is how the modules communicate to each other, how they work together.
-        </p>
+The highest level defines which modules will the whole application consist of and what functionality will each of those modules have.
 
-        <p>
-            The lower level is the structure of each module - what classes, entities, data structures and similar things will
-            the module consist of.
-        </p>
+The next level is how the modules communicate to each other, how they work together.
 
-        <p>
-            One of the lowest, yet still very important architecture levels is how files are organized.
-        </p>
-    </div>
-</div>
+The lower level is the structure of each module - what classes, entities, data structures and similar things will the module consist of.
+
+One of the lowest, yet still very important architecture levels is how files are organized.
 
 From the highest architecture layer point of view, I can advice a very simple architecture:
 
@@ -77,4 +62,4 @@ Just try it!
 
 Remember all the three rules for our architecture. And keeping them in mind, let's get to some coding already!
 
-[Next chapter](irrlicht-newton-tutorials/2015-08-27-first-application)
+[Next chapter](2015-08-27-first-application)

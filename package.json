@@ -1,0 +1,16 @@
+{
+  "name": "moo-ssg",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "vitepress build blog",
+    "dev": "vitepress dev blog",
+    "serve": "vitepress serve blog"
+  },
+  "devDependencies": {
+    "date-fns": "^2.28.0",
+    "gray-matter": "^4.0.3",
+    "vitepress": "^0.22.4"
+  }
+}

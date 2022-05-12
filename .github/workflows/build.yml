@@ -22,14 +22,14 @@ jobs:
         node-version: 16.5.0
         cache: 'npm'
 
+    - name: Install dependencies
+      run: npm install
+
     - name: Build the blog
+      run: npm run build
+
+    - name: Publish to GH pages
       run: |
-        #!/usr/bin/env sh
-        set -e
-
-        npm install
-        npm run build
-
         cd blog/.vitepress/dist
 
         git config --global user.email "deploybot@github.com"
